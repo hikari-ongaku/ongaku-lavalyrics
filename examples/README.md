@@ -2,11 +2,11 @@
 
 Quick note for the examples, you need to make sure that you have the correct requirements. below is the different requirements you may need, or you can use the [examples_requirements](./examples_requirements.txt) file, for all of them.
 
-!!! note
-    all examples support the following versions:
 
-    ongaku: `1.0.0`
-    ongaku-lavalyrics: `0.1.0`
+all examples support the following versions:
+
+ongaku: `1.0.0`
+ongaku-lavalyrics: `0.1.0`
 
 All files must include the following:
 
