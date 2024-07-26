@@ -1,0 +1,2 @@
+nox == 2024.4.15
+hikari-ongaku == 1.0.1
