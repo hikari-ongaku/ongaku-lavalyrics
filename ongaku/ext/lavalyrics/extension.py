@@ -71,8 +71,6 @@ class Extension(ongaku.Extension):
             Raised when there is no available sessions for this request to take place.
         TimeoutError
             Raised when the request takes too long to respond.
-        RestEmptyError
-            Raised when the request required a return type, but received nothing, or a 204 response.
         RestStatusError
             Raised when a 4XX or a 5XX status is received.
         BuildError
@@ -136,8 +134,6 @@ class Extension(ongaku.Extension):
             Raised when there is no available sessions for this request to take place.
         TimeoutError
             Raised when the request takes too long to respond.
-        RestEmptyError
-            Raised when the request required a return type, but received nothing, or a 204 response.
         RestStatusError
             Raised when a 4XX or a 5XX status is received.
         BuildError
