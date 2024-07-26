@@ -1,0 +1,25 @@
+[tool.pyright]
+pythonVersion = "3.10"
+typeCheckingMode = "strict"
+reportPrivateUsage = false
+reportMissingTypeStubs = true
+reportUnnecessaryTypeIgnoreComment = "warning"
+reportUninitializedInstanceVariable = "error"
+reportShadowedImports = "warning"
+
+[tool.ruff]
+extend-exclude = ["examples/*", ".venv/*"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+force-single-line = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "TCH", "C", "N", "D2", "D3", "D415", "D417", "D418", "D419", "ASYNC", "Q", "RSE", "SIM", "RUF"]
+ignore = ["F405", "F403", "E501", "D205"]
+fixable = ["I", "TCH", "D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
