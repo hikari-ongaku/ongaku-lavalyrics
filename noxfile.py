@@ -47,7 +47,7 @@ def format(session: nox.Session) -> None:
 
 @nox.session()
 def pyright(session: nox.Session) -> None:
-    session.install(".[injection, speedups]")
+    session.install(".")
     session.install("-U", "pyright")
     session.install("-Ur", "examples/examples_requirements.txt")
     session.run("pyright", PATH_TO_PROJECT, EXAMPLES_PATH)
