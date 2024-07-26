@@ -25,7 +25,6 @@ jobs:
         run: |
           pip install -Ur requirements.txt
           pip install -Ur requirements/tests.txt
-          pip install -Ur requirements/injection.txt
 
       - name: Run tests
         run: pytest tests
