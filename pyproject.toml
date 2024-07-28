@@ -23,3 +23,6 @@ fixable = ["I", "TCH", "D"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"examples/**.py" = ["C901"]
