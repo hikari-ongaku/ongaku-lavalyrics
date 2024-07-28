@@ -18,7 +18,7 @@ from ongaku.ext.lavalyrics.about import __license__
 from ongaku.ext.lavalyrics.about import __maintainer__
 from ongaku.ext.lavalyrics.about import __url__
 from ongaku.ext.lavalyrics.about import __version__
-from ongaku.ext.lavalyrics.extension import Extension
+from ongaku.ext.lavalyrics.extension import LavaLyricsExtension
 
 __all__ = (
     # .about
@@ -32,7 +32,7 @@ __all__ = (
     "Lyrics",
     "LyricLine",
     # .extension
-    "Extension",
+    "LavaLyricsExtension",
 )
 
 # MIT License

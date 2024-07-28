@@ -9,10 +9,10 @@ from ongaku.ext.lavalyrics import impl
 from ongaku.ext.lavalyrics.abc import LyricLine
 from ongaku.ext.lavalyrics.abc import Lyrics
 
-__all__ = ("Extension",)
+__all__ = ("LavaLyricsExtension",)
 
 
-class Extension(ongaku.Extension):
+class LavaLyricsExtension(ongaku.Extension):
     def __init__(self, client: Client) -> None:
         super().__init__(client)
 
