@@ -7,7 +7,7 @@ import mock
 import pytest
 
 import ongaku
-from ongaku.ext.lavalyrics.extension import Extension
+from ongaku.ext.lavalyrics.extension import LavaLyricsExtension
 
 if typing.TYPE_CHECKING:
     from ongaku import Client
@@ -31,7 +31,7 @@ LYRICS_PAYLOAD: PayloadT = {
 
 
 def test__build_lyrics():
-    ext = Extension(mock.Mock())
+    ext = LavaLyricsExtension(mock.Mock())
 
     lyrics = ext._build_lyrics(LYRICS_PAYLOAD)
 
@@ -43,7 +43,7 @@ def test__build_lyrics():
 
 
 def test__build_lyric_line():
-    ext = Extension(mock.Mock())
+    ext = LavaLyricsExtension(mock.Mock())
 
     line = ext._build_lyric_line(LYRICS_LINE_PAYLOAD)
     assert line.timestamp == 1
@@ -55,7 +55,7 @@ def test__build_lyric_line():
 @pytest.mark.asyncio
 async def test_fetch_lyrics_with_track():
     client: Client = mock.Mock()
-    ext = Extension(client)
+    ext = LavaLyricsExtension(client)
 
     session = mock.AsyncMock()
 
@@ -86,7 +86,7 @@ async def test_fetch_lyrics_with_track():
 @pytest.mark.asyncio
 async def test_fetch_lyrics_track_source():
     client: Client = mock.Mock()
-    ext = Extension(client)
+    ext = LavaLyricsExtension(client)
 
     session = mock.AsyncMock()
 
@@ -110,7 +110,7 @@ async def test_fetch_lyrics_track_source():
 @pytest.mark.asyncio
 async def test_fetch_lyrics():
     client: Client = mock.Mock()
-    ext = Extension(client)
+    ext = LavaLyricsExtension(client)
 
     session = mock.AsyncMock()
 
@@ -137,7 +137,7 @@ async def test_fetch_lyrics():
 @pytest.mark.asyncio
 async def test_fetch_lyrics_from_playing_track_source():
     client: Client = mock.Mock()
-    ext = Extension(client)
+    ext = LavaLyricsExtension(client)
 
     session = mock.AsyncMock()
 
@@ -166,7 +166,7 @@ async def test_fetch_lyrics_from_playing_track_source():
 @pytest.mark.asyncio
 async def test_fetch_lyrics_from_playing():
     client: Client = mock.Mock()
-    ext = Extension(client)
+    ext = LavaLyricsExtension(client)
 
     session = mock.AsyncMock()
 
