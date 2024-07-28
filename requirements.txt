@@ -1,1 +1,1 @@
-hikari-ongaku @ git+https://github.com/mplatypus/hikari-ongaku@improvements/handling
+hikari-ongaku @ git+https://github.com/hikari-ongaku/hikari-ongaku@improvements/handling

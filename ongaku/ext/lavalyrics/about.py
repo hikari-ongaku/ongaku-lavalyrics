@@ -4,7 +4,7 @@ __author__: typing.Final[str] = "mplaty"
 __author_email__: typing.Final[str] = "contact@mplaty.com"
 __maintainer__: typing.Final[str] = "MPlaty"
 __license__: typing.Final[str] = "MIT"
-__url__: typing.Final[str] = "https://github.com/MPlatypus/ongaku-lavalyrics"
+__url__: typing.Final[str] = "https://github.com/hikari-ongaku/ongaku-lavalyrics"
 __version__: typing.Final[str] = "0.1.0"
 
 # MIT License

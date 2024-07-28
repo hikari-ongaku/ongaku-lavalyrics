@@ -34,6 +34,6 @@ Welcome to the documentation for **ongaku-lavalyrics**, an extension to [hikari-
 
     Here are some basic examples for ongaku.
 
-    [:material-arrow-right: Learn more](https://github.com/MPlatypus/ongaku-lavalyrics/tree/main/examples/)
+    [:material-arrow-right: Learn more](https://github.com/hikari-ongaku/ongaku-lavalyrics/tree/main/examples/)
 
 </div>

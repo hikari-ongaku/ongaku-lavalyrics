@@ -3,7 +3,7 @@
 The lavaLyrics extension for ongaku!
 
 GitHub:
-https://github.com/MPlatypus/ongaku-lavalyrics
+https://github.com/hikari-ongaku/ongaku-lavalyrics
 Docs:
 https://lavalyrics.ongaku.mplaty.com
 """
