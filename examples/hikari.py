@@ -11,6 +11,9 @@ client = ongaku.Client(bot)
 
 client.add_extension(LavaLyricsExtension(client))
 
+client.create_session(
+    "hikari-session", host="127.0.0.1", password="youshallnotpass"
+)
 
 @bot.listen()
 async def message_event(event: hikari.GuildMessageCreateEvent) -> None:
