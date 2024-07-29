@@ -108,6 +108,33 @@ async def test_fetch_lyrics_track_source():
 
 
 @pytest.mark.asyncio
+async def test_fetch_lyrics_with_session():
+    client: Client = mock.Mock()
+    ext = LavaLyricsExtension(client)
+
+    session = mock.AsyncMock()
+
+    with (
+        mock.patch.object(
+            client.session_handler, "fetch_session", return_value=session
+        ) as patched_fetch_session,
+        mock.patch.object(
+            session, "request", return_value=mock.AsyncMock()
+        ) as patched_request,
+    ):
+        await ext.fetch_lyrics("encoded", session=session)
+
+        patched_fetch_session.assert_not_called()
+
+        patched_request.assert_called_once_with(
+            "GET",
+            "/lyrics",
+            dict,
+            params={"track": "encoded", "skipTrackSource": False},
+        )
+
+
+@pytest.mark.asyncio
 async def test_fetch_lyrics():
     client: Client = mock.Mock()
     ext = LavaLyricsExtension(client)
@@ -181,6 +208,35 @@ async def test_fetch_lyrics_from_playing():
         await ext.fetch_lyrics_from_playing("session_id", hikari.Snowflake(1234))
 
         patched_fetch_session.assert_called_once()
+
+        patched_request.assert_called_once_with(
+            "GET",
+            "/sessions/session_id/players/1234/track/lyrics",
+            dict,
+            params={"skipTrackSource": False},
+        )
+
+
+@pytest.mark.asyncio
+async def test_fetch_lyrics_from_playing_with_session():
+    client: Client = mock.Mock()
+    ext = LavaLyricsExtension(client)
+
+    session = mock.AsyncMock()
+
+    with (
+        mock.patch.object(
+            client.session_handler, "fetch_session", return_value=session
+        ) as patched_fetch_session,
+        mock.patch.object(
+            session, "request", return_value=mock.AsyncMock()
+        ) as patched_request,
+    ):
+        await ext.fetch_lyrics_from_playing(
+            "session_id", hikari.Snowflake(1234), session=session
+        )
+
+        patched_fetch_session.assert_not_called()
 
         patched_request.assert_called_once_with(
             "GET",
