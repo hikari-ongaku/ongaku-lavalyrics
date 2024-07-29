@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 
-from . import abc as abc_
+from ongaku.ext.lavalyrics import abc as abc_
 
 __all__ = (
     "Lyrics",
