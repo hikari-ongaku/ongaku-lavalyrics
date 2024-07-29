@@ -11,7 +11,7 @@ ongaku-lavalyrics: `0.1.0`
 All files must include the following:
 
 ```
-hikari-ongaku == 0.6.0
+hikari-ongaku == 1.0.1
 ```
 
 [arc](./arc.py): 
