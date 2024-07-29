@@ -12,13 +12,13 @@ Welcome to the documentation for **ongaku-lavalyrics**, an extension to [hikari-
 
 <div class="grid cards" markdown>
 
--  Hikari
+-  Ongaku
 
     ---
 
-    Hikari is the discord bot framework that ongaku rely's on.
+    Ongaku is the music client that LavaLyrics is for.
 
-    [:material-arrow-right: Learn more](https://hikari-py.dev/)
+    [:material-arrow-right: Learn more](https://ongaku.mplaty.com/)
 
 -  Guides
 
