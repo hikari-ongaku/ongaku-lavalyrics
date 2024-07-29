@@ -16,7 +16,9 @@ class LavaLyricsExtension(ongaku.Extension):
     def __init__(self, client: Client) -> None:
         super().__init__(client)
 
-    def event_handler(self, payload: str) -> None:
+    def event_handler(
+        self, payload: typing.Mapping[str, typing.Any], session: Session
+    ) -> None:
         pass
 
     def _build_lyric_line(self, payload: typing.Mapping[str, typing.Any]) -> LyricLine:
@@ -170,3 +172,26 @@ class LavaLyricsExtension(ongaku.Extension):
             raise ValueError("Response is required for this request.")
 
         return self._build_lyrics(response)
+
+
+# MIT License
+
+# Copyright (c) 2024-present MPlatypus
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
