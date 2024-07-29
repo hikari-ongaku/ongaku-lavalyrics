@@ -97,7 +97,7 @@ extra:
   generator: false
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/hikari-ongaku/hikari-ongaku
+      link: https://github.com/hikari-ongaku/ongaku-lavalyrics
       name: Ongaku LavaLyrics Github
 
 
