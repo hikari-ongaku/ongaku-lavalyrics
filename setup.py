@@ -56,7 +56,6 @@ setup(
     zip_safe=False,
     install_requires=parse_requirements_file("requirements.txt"),
     extras_require={
-        "docs": parse_requirements_file("requirements/doc.txt"),
         "dev": parse_requirements_file("requirements/dev.txt"),
     },
     python_requires=">=3.10.0,<3.13",
