@@ -18,7 +18,6 @@ options.sessions = [
     "import_fix",
     "pyright",
     "pytest",
-    "docs",
 ]
 
 
@@ -58,21 +57,3 @@ def pytest(session: nox.Session) -> None:
     session.install("-U", ".")
     session.install("-Ur", "requirements/tests.txt")
     session.run("pytest", "tests")
-
-
-@nox.session()
-def docs(session: nox.Session) -> None:
-    session.install("-Ur", "requirements/doc.txt")
-    session.install("-Ur", "requirements.txt")
-    session.install("-U", ".")
-    session.install("-U", "black")
-    session.run("python", "-m", "mkdocs", "build", "-q", "-s")
-
-
-@nox.session()
-def servedocs(session: nox.Session) -> None:
-    session.install("-Ur", "requirements/doc.txt")
-    session.install("-Ur", "requirements.txt")
-    session.install("-U", ".")
-    session.install("-U", "black")
-    session.run("python", "-m", "mkdocs", "serve")
