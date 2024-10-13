@@ -75,16 +75,17 @@ class Lyrics:
 
 
 @client.include
-@crescent.command(name="current-lyrics", description="View the currently playing lyrics of a song!")
+@crescent.command(
+    name="current-lyrics", description="View the currently playing lyrics of a song!"
+)
 class CurrentLyrics:
-
     async def callback(self, ctx: crescent.Context):
         music_client: ongaku.Client = ctx.client.model.ongaku
 
         if ctx.guild_id is None:
             await ctx.respond(
                 "This command must be ran in a guild.",
-                flags=hikari.MessageFlag.EPHEMERAL
+                flags=hikari.MessageFlag.EPHEMERAL,
             )
             return
 
@@ -94,17 +95,16 @@ class CurrentLyrics:
 
         if player.track is None:
             await ctx.respond(
-                "No song is currently playing!",
-                flags=hikari.MessageFlag.EPHEMERAL
+                "No song is currently playing!", flags=hikari.MessageFlag.EPHEMERAL
             )
             return
-        
+
         session_id = player.session.session_id
 
         if session_id is None:
             await ctx.respond(
-                "The session that the player is in has not been started.", 
-                flags=hikari.MessageFlag.EPHEMERAL
+                "The session that the player is in has not been started.",
+                flags=hikari.MessageFlag.EPHEMERAL,
             )
             return
 

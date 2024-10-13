@@ -68,7 +68,9 @@ async def lyrics_command(
 
 
 @component.with_slash_command
-@tanjun.as_slash_command("current-lyrics", "View the currently playing lyrics of a song!")
+@tanjun.as_slash_command(
+    "current-lyrics", "View the currently playing lyrics of a song!"
+)
 async def current_lyrics_command(
     ctx: tanjun.abc.SlashContext,
     player: ongaku.Player = tanjun.inject(),
@@ -77,17 +79,16 @@ async def current_lyrics_command(
 
     if player.track is None:
         await ctx.create_initial_response(
-            "No song is currently playing!",
-            flags=hikari.MessageFlag.EPHEMERAL
+            "No song is currently playing!", flags=hikari.MessageFlag.EPHEMERAL
         )
         return
-    
+
     session_id = player.session.session_id
 
     if session_id is None:
         await ctx.create_initial_response(
-            "The session that the player is in has not been started.", 
-            flags=hikari.MessageFlag.EPHEMERAL
+            "The session that the player is in has not been started.",
+            flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
 

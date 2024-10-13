@@ -12,7 +12,7 @@ client = arc.GatewayClient(bot)
 
 ongaku_client = ongaku.Client.from_arc(client)
 
-ongaku_client.add_extension(LavaLyricsExtension(ongaku_client))
+ongaku_client.add_extension(LavaLyricsExtension)
 
 ongaku_client.create_session(
     "arc-session", host="127.0.0.1", password="youshallnotpass"
@@ -64,6 +64,7 @@ async def lyrics_command(
 
     await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
+
 @client.include
 @arc.slash_command("current-lyrics", "View the currently playing lyrics of a song!")
 async def current_lyrics_command(
@@ -74,17 +75,16 @@ async def current_lyrics_command(
 
     if player.track is None:
         await ctx.respond(
-            "No song is currently playing!",
-            flags=hikari.MessageFlag.EPHEMERAL
+            "No song is currently playing!", flags=hikari.MessageFlag.EPHEMERAL
         )
         return
-    
+
     session_id = player.session.session_id
 
     if session_id is None:
         await ctx.respond(
-            "The session that the player is in has not been started.", 
-            flags=hikari.MessageFlag.EPHEMERAL
+            "The session that the player is in has not been started.",
+            flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
 

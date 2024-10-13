@@ -16,7 +16,9 @@ class LavaLyricsExtension(ongaku.Extension):
     def __init__(self, client: Client) -> None:
         super().__init__(client)
 
-    def event_handler(self, payload: typing.Mapping[str, typing.Any], session: Session) -> ongaku.OngakuEvent | None:
+    def event_handler(
+        self, payload: typing.Mapping[str, typing.Any], session: Session
+    ) -> ongaku.OngakuEvent | None:
         return None
 
     def _build_lyric_line(self, payload: typing.Mapping[str, typing.Any]) -> LyricLine:

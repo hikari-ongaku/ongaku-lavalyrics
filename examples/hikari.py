@@ -9,7 +9,7 @@ bot = hikari.GatewayBot(token="...")
 
 client = ongaku.Client(bot)
 
-client.add_extension(LavaLyricsExtension(client))
+client.add_extension(LavaLyricsExtension)
 
 
 @bot.listen()
@@ -84,19 +84,19 @@ async def current_lyrics_command_event(event: hikari.GuildMessageCreateEvent) ->
 
     if player.track is None:
         await bot.rest.create_message(
-        event.channel_id,
-        "No song is currently playing!",
-        reply=event.message,
+            event.channel_id,
+            "No song is currently playing!",
+            reply=event.message,
         )
         return
-    
+
     session_id = player.session.session_id
 
     if session_id is None:
         await bot.rest.create_message(
-        event.channel_id,
-        "The session that the player is in has not been started.", 
-        reply=event.message,
+            event.channel_id,
+            "The session that the player is in has not been started.",
+            reply=event.message,
         )
         return
 
@@ -104,9 +104,9 @@ async def current_lyrics_command_event(event: hikari.GuildMessageCreateEvent) ->
 
     if lyrics is None:
         await bot.rest.create_message(
-        event.channel_id,
-        "Could not find lyrics for the requested track.",
-        reply=event.message,
+            event.channel_id,
+            "Could not find lyrics for the requested track.",
+            reply=event.message,
         )
         return
 
@@ -116,10 +116,11 @@ async def current_lyrics_command_event(event: hikari.GuildMessageCreateEvent) ->
     )
 
     await bot.rest.create_message(
-    event.channel_id,
-    embed=embed,
-    reply=event.message,
+        event.channel_id,
+        embed=embed,
+        reply=event.message,
     )
+
 
 if __name__ == "__main__":
     bot.run()
