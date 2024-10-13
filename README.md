@@ -35,8 +35,6 @@ py -m ongaku-lavalyrics
 
 ## Getting Started
 
-for more about how to get started see the [docs](https://lavalyrics.ongaku.mplaty.com/gs/)
-
 ```py
 import typing
 import hikari
@@ -129,6 +127,5 @@ For general usage help or questions, see the `#ongaku` channel in the [hikari di
 
 ### Links
 
-- [**Documentation**](https://lavalyrics.ongaku.mplaty.com)
 - [**Examples**](https://github.com/hikari-ongaku/ongaku-lavalyrics/tree/main/examples)
 - [**License**](https://github.com/hikari-ongaku/ongaku-lavalyrics/blob/main/LICENSE)
