@@ -13,7 +13,7 @@ client.add_extension(LavaLyricsExtension(client))
 
 
 @bot.listen()
-async def message_event(event: hikari.GuildMessageCreateEvent) -> None:
+async def lyrics_command_event(event: hikari.GuildMessageCreateEvent) -> None:
     if not event.content or not event.is_human or not event.guild_id:
         return
 
@@ -69,6 +69,57 @@ async def message_event(event: hikari.GuildMessageCreateEvent) -> None:
         reply=event.message,
     )
 
+
+@bot.listen()
+async def current_lyrics_command_event(event: hikari.GuildMessageCreateEvent) -> None:
+    if not event.content or not event.is_human or not event.guild_id:
+        return
+
+    if not event.content.startswith("!current-lyrics"):
+        return
+
+    player = client.fetch_player(event.guild_id)
+
+    ll = player.session.client.get_extension(LavaLyricsExtension)
+
+    if player.track is None:
+        await bot.rest.create_message(
+        event.channel_id,
+        "No song is currently playing!",
+        reply=event.message,
+        )
+        return
+    
+    session_id = player.session.session_id
+
+    if session_id is None:
+        await bot.rest.create_message(
+        event.channel_id,
+        "The session that the player is in has not been started.", 
+        reply=event.message,
+        )
+        return
+
+    lyrics = await ll.fetch_lyrics_from_playing(session_id, player.guild_id)
+
+    if lyrics is None:
+        await bot.rest.create_message(
+        event.channel_id,
+        "Could not find lyrics for the requested track.",
+        reply=event.message,
+        )
+        return
+
+    embed = hikari.Embed(
+        title=f"Lyrics for {player.track.info.title}",
+        description="\n".join([lyric.line for lyric in lyrics.lines]),
+    )
+
+    await bot.rest.create_message(
+    event.channel_id,
+    embed=embed,
+    reply=event.message,
+    )
 
 if __name__ == "__main__":
     bot.run()

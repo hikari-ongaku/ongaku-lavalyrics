@@ -67,6 +67,47 @@ async def lyrics_command(
     await ctx.create_initial_response(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 
+@component.with_slash_command
+@tanjun.as_slash_command("current-lyrics", "View the currently playing lyrics of a song!")
+async def current_lyrics_command(
+    ctx: tanjun.abc.SlashContext,
+    player: ongaku.Player = tanjun.inject(),
+) -> None:
+    ll = player.session.client.get_extension(LavaLyricsExtension)
+
+    if player.track is None:
+        await ctx.create_initial_response(
+            "No song is currently playing!",
+            flags=hikari.MessageFlag.EPHEMERAL
+        )
+        return
+    
+    session_id = player.session.session_id
+
+    if session_id is None:
+        await ctx.create_initial_response(
+            "The session that the player is in has not been started.", 
+            flags=hikari.MessageFlag.EPHEMERAL
+        )
+        return
+
+    lyrics = await ll.fetch_lyrics_from_playing(session_id, player.guild_id)
+
+    if lyrics is None:
+        await ctx.create_initial_response(
+            "Could not find lyrics for the requested track.",
+            flags=hikari.MessageFlag.EPHEMERAL,
+        )
+        return
+
+    embed = hikari.Embed(
+        title=f"Lyrics for {player.track.info.title}",
+        description="\n".join([lyric.line for lyric in lyrics.lines]),
+    )
+
+    await ctx.create_initial_response(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
+
+
 if __name__ == "__main__":
     client.add_component(component)
     bot.run()
