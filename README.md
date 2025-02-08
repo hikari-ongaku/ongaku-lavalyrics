@@ -1,5 +1,5 @@
-# Ongaku
-A simple voice library for Hikari.
+# Ongaku Lava Lyrics
+Ongaku LavaLyrics is an extension for [Ongaku](https://ongaku.mplaty.com/) that allows you to fetch lyrics for songs!
 
 <div align="center">
 
@@ -10,12 +10,9 @@ A simple voice library for Hikari.
 
 </div>
 
-Ongaku LavaLyrics is an extension for [Ongaku](https://ongaku.mplaty.com/) that allows you to fetch lyrics for songs!
+## Prerequisites
 
-## Current Features
-
-- Fetching Currently Playing songs
-- Fetching Songs
+You must add the Lavalink [Lava Lyrics plugin](https://github.com/topi314/LavaSearch) to your Lavalink server(s).
 
 ## Installation
 
@@ -183,7 +180,7 @@ Returns
 |[`Lyrics`](#lyrics)  |If successfully found, a [Lyrics](#lyrics) object.                                   |
 |`None`               |If the lyrics do not exist for the track, or if the track requested does not exist.  |
 
-### Lyrics
+### `Lyrics`
 
 Properties
 |Name         |Value                                           |Description                                                          |
@@ -194,7 +191,7 @@ Properties
 |lines        |`typing.Sequence[`[`LyricLine`](#lyricline)`]`  |The lyrics lines.                                                    |
 |plugin       |`typing.Mapping[str, typing.Any]`               |Additional plugin specific data.                                     |
 
-### LyricLine
+### `LyricLine`
 
 Properties
 |Name       |Value                              |Description                                 |
