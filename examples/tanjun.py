@@ -85,9 +85,8 @@ async def lyrics_command(
 async def current_lyrics_command(
     ctx: tanjun.abc.SlashContext,
     player: ongaku.Player = tanjun.inject(),
+    lavalyrics: LavaLyricsExtension = tanjun.inject(),
 ) -> None:
-    ll = player.session.client.get_extension(LavaLyricsExtension)
-
     if player.track is None:
         await ctx.create_initial_response(
             "No song is currently playing!", flags=hikari.MessageFlag.EPHEMERAL
@@ -103,7 +102,7 @@ async def current_lyrics_command(
         )
         return
 
-    lyrics = await ll.fetch_lyrics_from_playing(session_id, player.guild_id)
+    lyrics = await lavalyrics.fetch_lyrics_from_playing(session_id, player.guild_id)
 
     if lyrics is None:
         await ctx.create_initial_response(
