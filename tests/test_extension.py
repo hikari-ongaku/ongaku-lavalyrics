@@ -120,7 +120,41 @@ async def test_fetch_lyrics_without_track():
 
 
 @pytest.mark.asyncio
-async def test_fetch_lyrics_with_track_from_source():
+async def test_fetch_lyrics_with_track_skip_source():
+    client: Client = mock.Mock()
+    ext = LavaLyricsExtension(client)
+
+    session = mock.AsyncMock()
+
+    track: ongaku.Track = mock.MagicMock(spec=ongaku.Track)
+
+    track.encoded = "encoded"
+
+    with (
+        mock.patch.object(
+            client.session_handler, "fetch_session", return_value=session
+        ) as patched_fetch_session,
+        mock.patch.object(
+            session, "request", return_value=LYRICS_PAYLOAD
+        ) as patched_request,
+    ):
+        lyrics = await ext.fetch_lyrics(track, skip_track_source=True)
+
+        assert isinstance(lyrics, Lyrics)
+
+        patched_fetch_session.assert_called_once()
+
+        patched_request.assert_called_once_with(
+            "GET",
+            "/lyrics",
+            dict,
+            params={"track": "encoded", "skipTrackSource": True},
+            optional=True,
+        )
+
+
+@pytest.mark.asyncio
+async def test_fetch_lyrics_with_track_from_session():
     client: Client = mock.Mock()
     ext = LavaLyricsExtension(client)
 
@@ -134,9 +168,7 @@ async def test_fetch_lyrics_with_track_from_source():
             session, "request", return_value=LYRICS_PAYLOAD
         ) as patched_request,
     ):
-        lyrics = await ext.fetch_lyrics(
-            "encoded", skip_track_source=True, session=session
-        )
+        lyrics = await ext.fetch_lyrics("encoded", session=session)
 
         assert isinstance(lyrics, Lyrics)
 
@@ -146,7 +178,7 @@ async def test_fetch_lyrics_with_track_from_source():
             "GET",
             "/lyrics",
             dict,
-            params={"track": "encoded", "skipTrackSource": True},
+            params={"track": "encoded", "skipTrackSource": False},
             optional=True,
         )
 
@@ -214,7 +246,39 @@ async def test_fetch_lyrics_from_playing_without_track():
 
 
 @pytest.mark.asyncio
-async def test_fetch_lyrics_from_playing_with_track_from_source():
+async def test_fetch_lyrics_from_playing_with_track_skip_source():
+    client: Client = mock.Mock()
+    ext = LavaLyricsExtension(client)
+
+    session = mock.AsyncMock()
+
+    with (
+        mock.patch.object(
+            client.session_handler, "fetch_session", return_value=session
+        ) as patched_fetch_session,
+        mock.patch.object(
+            session, "request", return_value=LYRICS_PAYLOAD
+        ) as patched_request,
+    ):
+        lyrics = await ext.fetch_lyrics_from_playing(
+            "session_id", hikari.Snowflake(1234), skip_track_source=True
+        )
+
+        assert isinstance(lyrics, Lyrics)
+
+        patched_fetch_session.assert_called_once()
+
+        patched_request.assert_called_once_with(
+            "GET",
+            "/sessions/session_id/players/1234/track/lyrics",
+            dict,
+            params={"skipTrackSource": True},
+            optional=True,
+        )
+
+
+@pytest.mark.asyncio
+async def test_fetch_lyrics_from_playing_with_track_from_session():
     client: Client = mock.Mock()
     ext = LavaLyricsExtension(client)
 
