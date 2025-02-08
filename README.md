@@ -12,7 +12,7 @@ Ongaku LavaLyrics is an extension for [Ongaku](https://ongaku.mplaty.com/) that 
 
 ## Prerequisites
 
-You must add the Lavalink [Lava Lyrics plugin](https://github.com/topi314/LavaSearch) to your Lavalink server(s).
+You must add the Lavalink [Lava Lyrics plugin](https://github.com/topi314/LavaLyrics) to your Lavalink server(s).
 
 ## Installation
 
