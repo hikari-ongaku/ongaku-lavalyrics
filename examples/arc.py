@@ -25,6 +25,7 @@ async def lyrics_command(
     ctx: arc.GatewayContext,
     query: arc.Option[str, arc.StrParams("The song you wish to search for.")],
     music: ongaku.Client = arc.inject(),
+    lavalyrics: LavaLyricsExtension = arc.inject()
 ) -> None:
     result = await music.rest.load_track(query)
 
@@ -33,8 +34,6 @@ async def lyrics_command(
             "Could not find requested track.", flags=hikari.MessageFlag.EPHEMERAL
         )
         return
-
-    ll = music.get_extension(LavaLyricsExtension)
 
     if isinstance(result, typing.Sequence):
         track = result[0]
@@ -48,7 +47,7 @@ async def lyrics_command(
     else:
         track = result
 
-    lyrics = await ll.fetch_lyrics(track)
+    lyrics = await lavalyrics.fetch_lyrics(track)
 
     if lyrics is None:
         await ctx.respond(
@@ -56,12 +55,21 @@ async def lyrics_command(
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
-
-    embed = hikari.Embed(
-        title=f"Lyrics for {track.info.title}",
-        description="\n".join([lyric.line for lyric in lyrics.lines]),
-    )
-
+    
+    if len(lyrics.lines) > 0:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description="\n".join([lyric.line for lyric in lyrics.lines]),
+        )
+    elif lyrics.text:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description=lyrics.text,
+        )
+    else:
+        await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
+        return
+    
     await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 
@@ -70,9 +78,8 @@ async def lyrics_command(
 async def current_lyrics_command(
     ctx: arc.GatewayContext,
     player: ongaku.Player = arc.inject(),
+    lavalyrics: LavaLyricsExtension = arc.inject()
 ) -> None:
-    ll = player.session.client.get_extension(LavaLyricsExtension)
-
     if player.track is None:
         await ctx.respond(
             "No song is currently playing!", flags=hikari.MessageFlag.EPHEMERAL
@@ -88,7 +95,7 @@ async def current_lyrics_command(
         )
         return
 
-    lyrics = await ll.fetch_lyrics_from_playing(session_id, player.guild_id)
+    lyrics = await lavalyrics.fetch_lyrics_from_playing(session_id, player.guild_id)
 
     if lyrics is None:
         await ctx.respond(
@@ -96,12 +103,21 @@ async def current_lyrics_command(
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
-
-    embed = hikari.Embed(
-        title=f"Lyrics for {player.track.info.title}",
-        description="\n".join([lyric.line for lyric in lyrics.lines]),
-    )
-
+    
+    if len(lyrics.lines) > 0:
+        embed = hikari.Embed(
+            title=f"Lyrics for {player.track.info.title}",
+            description="\n".join([lyric.line for lyric in lyrics.lines]),
+        )
+    elif lyrics.text:
+        embed = hikari.Embed(
+            title=f"Lyrics for {player.track.info.title}",
+            description=lyrics.text,
+        )
+    else:
+        await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
+        return
+    
     await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 

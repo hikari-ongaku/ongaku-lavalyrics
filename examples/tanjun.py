@@ -58,12 +58,21 @@ async def lyrics_command(
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
-
-    embed = hikari.Embed(
-        title=f"Lyrics for {track.info.title}",
-        description="\n".join([lyric.line for lyric in lyrics.lines]),
-    )
-
+    
+    if len(lyrics.lines) > 0:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description="\n".join([lyric.line for lyric in lyrics.lines]),
+        )
+    elif lyrics.text:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description=lyrics.text,
+        )
+    else:
+        await ctx.create_initial_response("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
+        return
+    
     await ctx.create_initial_response(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 
@@ -100,12 +109,21 @@ async def current_lyrics_command(
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
-
-    embed = hikari.Embed(
-        title=f"Lyrics for {player.track.info.title}",
-        description="\n".join([lyric.line for lyric in lyrics.lines]),
-    )
-
+    
+    if len(lyrics.lines) > 0:
+        embed = hikari.Embed(
+            title=f"Lyrics for {player.track.info.title}",
+            description="\n".join([lyric.line for lyric in lyrics.lines]),
+        )
+    elif lyrics.text:
+        embed = hikari.Embed(
+            title=f"Lyrics for {player.track.info.title}",
+            description=lyrics.text,
+        )
+    else:
+        await ctx.create_initial_response("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
+        return
+    
     await ctx.create_initial_response(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 
