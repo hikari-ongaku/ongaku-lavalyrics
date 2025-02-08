@@ -5,8 +5,8 @@ import typing
 from . import abc as abc_
 
 __all__ = (
-    "Lyrics",
     "LyricLine",
+    "Lyrics",
 )
 
 

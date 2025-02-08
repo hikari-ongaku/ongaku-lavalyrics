@@ -59,10 +59,21 @@ async def lyrics_command(
         )
         return
 
-    embed = hikari.Embed(
-        title=f"Lyrics for {track.info.title}",
-        description="\n".join([lyric.line for lyric in lyrics.lines]),
-    )
+    if len(lyrics.lines) > 0:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description="\n".join([lyric.line for lyric in lyrics.lines]),
+        )
+    elif lyrics.text:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description=lyrics.text,
+        )
+    else:
+        await ctx.create_initial_response(
+            "No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL
+        )
+        return
 
     await ctx.create_initial_response(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
@@ -74,9 +85,8 @@ async def lyrics_command(
 async def current_lyrics_command(
     ctx: tanjun.abc.SlashContext,
     player: ongaku.Player = tanjun.inject(),
+    lavalyrics: LavaLyricsExtension = tanjun.inject(),
 ) -> None:
-    ll = player.session.client.get_extension(LavaLyricsExtension)
-
     if player.track is None:
         await ctx.create_initial_response(
             "No song is currently playing!", flags=hikari.MessageFlag.EPHEMERAL
@@ -92,7 +102,7 @@ async def current_lyrics_command(
         )
         return
 
-    lyrics = await ll.fetch_lyrics_from_playing(session_id, player.guild_id)
+    lyrics = await lavalyrics.fetch_lyrics_from_playing(session_id, player.guild_id)
 
     if lyrics is None:
         await ctx.create_initial_response(
@@ -101,10 +111,21 @@ async def current_lyrics_command(
         )
         return
 
-    embed = hikari.Embed(
-        title=f"Lyrics for {player.track.info.title}",
-        description="\n".join([lyric.line for lyric in lyrics.lines]),
-    )
+    if len(lyrics.lines) > 0:
+        embed = hikari.Embed(
+            title=f"Lyrics for {player.track.info.title}",
+            description="\n".join([lyric.line for lyric in lyrics.lines]),
+        )
+    elif lyrics.text:
+        embed = hikari.Embed(
+            title=f"Lyrics for {player.track.info.title}",
+            description=lyrics.text,
+        )
+    else:
+        await ctx.create_initial_response(
+            "No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL
+        )
+        return
 
     await ctx.create_initial_response(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 

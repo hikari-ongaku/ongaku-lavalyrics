@@ -1,5 +1,5 @@
-# Ongaku
-A simple voice library for Hikari.
+# Ongaku Lava Lyrics
+Ongaku LavaLyrics is an extension for [Ongaku](https://ongaku.mplaty.com/) that allows you to fetch lyrics for songs!
 
 <div align="center">
 
@@ -10,12 +10,9 @@ A simple voice library for Hikari.
 
 </div>
 
-Ongaku LavaLyrics is an extension for [Ongaku](https://ongaku.mplaty.com/) that allows you to fetch lyrics for songs!
+## Prerequisites
 
-## Current Features
-
-- Fetching Currently Playing songs
-- Fetching Songs
+You must add the Lavalink [Lava Lyrics plugin](https://github.com/topi314/LavaLyrics) to your Lavalink server(s).
 
 ## Installation
 
@@ -98,34 +95,117 @@ async def message_event(
     # Fetch the lyrics for the song.
     lyrics = await ll.fetch_lyrics(track)
 
-    # Make sure the lyrics were not None.
     if lyrics is None:
-        await bot.rest.create_message(
-            event.channel_id,
+        await ctx.respond(
             "Could not find lyrics for the requested track.",
-            reply=event.message,
+            flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
 
-    # Turn lyrics into an embed.
-    embed = hikari.Embed(
-        title=f"Lyrics for {track.info.title}",
-        description="\n".join([lyric.line for lyric in lyrics.lines])
-    )
-
-    # Send the lyrics as an embed.
-    await bot.rest.create_message(
-        event.channel_id,
-        embed=embed,
-        reply=event.message,
-    )
+    if len(lyrics.lines) > 0:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description="\n".join([lyric.line for lyric in lyrics.lines]),
+        )
+    elif lyrics.text:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description=lyrics.text,
+        )
+    else:
+        await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
+        return
+    
+    await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 ```
 
-### Issues and support
+## API Reference
+
+### `LavaLyricsExtension`
+
+The base Lava Lyrics Extension.
+
+#### `fetch_lyrics_from_playing`
+
+Fetch the lyrics from a player that is currently playing a track.
+
+Parameters
+|Name               |Type                                                                 |Default  |Description                                    |
+|:------------------|:-------------------------------------------------------------------:|:-------:|:----------------------------------------------|
+|session_id         |`str`                                                                |         |The session id attached to the player.         |
+|guild              |`hikari.SnowflakeishOr[hikari.PartialGuild]`                         |         |The guild or guild id the player is in.        |
+|skip_track_source  |`bool`                                                               |`False`  |Whether to skip the tracks source for lyrics.  |
+|session            |[`Session`](https://ongaku.mplaty.com/api/session/#session), `None`  |`None`   |The session to use to fetch information from.  |
+
+Raises
+|Type                                                                                        |Description                                                                          |
+|:-------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------|
+|[`NoSessionsError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.NoSessionsError)    |Raised when there is no available sessions for this request to take place.           |
+|[`TimeoutError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.TimeoutError)          |Raised when the request takes too long to respond.                                   |
+|[`RestStatusError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.RestStatusError)    |Raised when a 4XX or a 5XX status is received.                                       |
+|[`BuildError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.BuildError)              |Raised when the lyrics could not be built.                                           |
+|[`RestRequestError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.RestRequestError)  |Raised when a 4XX or a 5XX status is received, and lavalink gives more information.  |
+|[`RestError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.RestError)                |Raised when an unknown error is caught.                                              |
+
+Returns
+|Type                 |Description                                                                          |
+|:--------------------|:------------------------------------------------------------------------------------|
+|[`Lyrics`](#lyrics)  |If successfully found, a [Lyrics](#lyrics) object.                                   |
+|`None`               |If the lyrics do not exist for the track, or if the track requested does not exist.  |
+
+#### `fetch_lyrics`
+
+Fetch the lyrics of a specified track, or its encoded value.
+
+Parameters
+|Name               |Type                                                                 |Default  |Description                                           |
+|:------------------|:-------------------------------------------------------------------:|:-------:|:-----------------------------------------------------|
+|track              |[`Track`](https://ongaku.mplaty.com/api/abc/track/#track), `str`     |         |The track you wish to fetch the lyrics for.           |
+|skip_track_source  |`bool`                                                               |`False`  |Whether to skip the tracks source for lyrics or not.  |
+|session            |[`Session`](https://ongaku.mplaty.com/api/session/#session), `None`  |`None`   |The session to use to fetch information from.         |
+
+Raises
+|Type                                                                                        |Description                                                                          |
+|:-------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------|
+|[`NoSessionsError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.NoSessionsError)    |Raised when there is no available sessions for this request to take place.           |
+|[`TimeoutError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.TimeoutError)          |Raised when the request takes too long to respond.                                   |
+|[`RestStatusError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.RestStatusError)    |Raised when a 4XX or a 5XX status is received.                                       |
+|[`BuildError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.BuildError)              |Raised when the lyrics could not be built.                                           |
+|[`RestRequestError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.RestRequestError)  |Raised when a 4XX or a 5XX status is received, and lavalink gives more information.  |
+|[`RestError`](https://ongaku.mplaty.com/api/errors/#ongaku.errors.RestError)                |Raised when an unknown error is caught.                                              |
+
+Returns
+|Type                 |Description                                                                          |
+|:--------------------|:------------------------------------------------------------------------------------|
+|[`Lyrics`](#lyrics)  |If successfully found, a [Lyrics](#lyrics) object.                                   |
+|`None`               |If the lyrics do not exist for the track, or if the track requested does not exist.  |
+
+### `Lyrics`
+
+Properties
+|Name         |Value                                           |Description                                                          |
+|:------------|:----------------------------------------------:|:--------------------------------------------------------------------|
+|source_name  |`str`                                           |The name of the source where the lyrics were fetched from.           |
+|provider     |`str`                                           |The name of the provider the lyrics was fetched from on the source.  |
+|text         |`str`, `None`                                   |The lyrics text.                                                     |
+|lines        |`typing.Sequence[`[`LyricLine`](#lyricline)`]`  |The lyrics lines.                                                    |
+|plugin       |`typing.Mapping[str, typing.Any]`               |Additional plugin specific data.                                     |
+
+### `LyricLine`
+
+Properties
+|Name       |Value                              |Description                                 |
+|:----------|:---------------------------------:|:-------------------------------------------|
+|timestamp  |`int`                              |The timestamp of the line in milliseconds.  |
+|duration   |`int`                              |The duration of the line in milliseconds.   |
+|line       |`str`                              |The lyrics line.                            |
+|plugin     |`typing.Mapping[str, typing.Any]`  |Additional plugin specific data.            |
+
+## Issues and support
 
 For general usage help or questions, see the `#ongaku` channel in the [hikari discord](https://discord.gg/hikari), if you have found a bug or have a feature request, feel free to [open an issue](https://github.com/hikari-ongaku/ongaku-lavalyrics/issues/new).
 
-### Links
+## Links
 
 - [**Examples**](https://github.com/hikari-ongaku/ongaku-lavalyrics/tree/main/examples)
 - [**License**](https://github.com/hikari-ongaku/ongaku-lavalyrics/blob/main/LICENSE)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 
-__all__ = ("Lyrics", "LyricLine")
+__all__ = ("LyricLine", "Lyrics")
 
 
 class Lyrics:
@@ -12,11 +12,11 @@ class Lyrics:
     """
 
     __slots__: typing.Sequence[str] = (
-        "_source_name",
-        "_provider",
-        "_text",
         "_lines",
         "_plugin",
+        "_provider",
+        "_source_name",
+        "_text",
     )
 
     @property
@@ -70,10 +70,10 @@ class LyricLine:
     """
 
     __slots__: typing.Sequence[str] = (
-        "_timestamp",
         "_duration",
         "_line",
         "_plugin",
+        "_timestamp",
     )
 
     @property

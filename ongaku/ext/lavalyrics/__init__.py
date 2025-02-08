@@ -20,7 +20,7 @@ from ongaku.ext.lavalyrics.about import __url__
 from ongaku.ext.lavalyrics.about import __version__
 from ongaku.ext.lavalyrics.extension import LavaLyricsExtension
 
-__all__ = (
+__all__ = (  # noqa: RUF022
     # .about
     "__author__",
     "__author_email__",
