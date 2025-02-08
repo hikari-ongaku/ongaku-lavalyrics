@@ -133,12 +133,12 @@ The base Lava Lyrics Extension.
 Fetch the lyrics from a player that is currently playing a track.
 
 Parameters
-|Name               |Type                                          |Default  |Description                                    |
-|:------------------|:--------------------------------------------:|:-------:|:----------------------------------------------|
-|session_id         |`str`                                         |         |The session id attached to the player.         |
-|guild              |`hikari.SnowflakeishOr[hikari.PartialGuild]`  |         |The guild or guild id the player is in.        |
-|skip_track_source  |`bool`                                        |`False`  |Whether to skip the tracks source for lyrics.  |
-|session            |`Session`, `None`                             |`None`   |The session to use to fetch information from.  |
+|Name               |Type                                                                 |Default  |Description                                    |
+|:------------------|:-------------------------------------------------------------------:|:-------:|:----------------------------------------------|
+|session_id         |`str`                                                                |         |The session id attached to the player.         |
+|guild              |`hikari.SnowflakeishOr[hikari.PartialGuild]`                         |         |The guild or guild id the player is in.        |
+|skip_track_source  |`bool`                                                               |`False`  |Whether to skip the tracks source for lyrics.  |
+|session            |[`Session`](https://ongaku.mplaty.com/api/session/#session), `None`  |`None`   |The session to use to fetch information from.  |
 
 Raises
 |Type                                                                                        |Description                                                                          |
@@ -161,11 +161,11 @@ Returns
 Fetch the lyrics of a specified track, or its encoded value.
 
 Parameters
-|Name               |Type                      |Default  |Description                                           |
-|:------------------|:------------------------:|:-------:|:-----------------------------------------------------|
-|track              |`ongaku.Track`, `str`     |         |The track you wish to fetch the lyrics for.           |
-|skip_track_source  |`bool`                    |`False`  |Whether to skip the tracks source for lyrics or not.  |
-|session            |`ongaku.Session`, `None`  |`None`   |The session to use to fetch information from.         |
+|Name               |Type                                                                 |Default  |Description                                           |
+|:------------------|:-------------------------------------------------------------------:|:-------:|:-----------------------------------------------------|
+|track              |[`Track`](https://ongaku.mplaty.com/api/abc/track/#track), `str`     |         |The track you wish to fetch the lyrics for.           |
+|skip_track_source  |`bool`                                                               |`False`  |Whether to skip the tracks source for lyrics or not.  |
+|session            |[`Session`](https://ongaku.mplaty.com/api/session/#session), `None`  |`None`   |The session to use to fetch information from.         |
 
 Raises
 |Type                                                                                        |Description                                                                          |
@@ -186,13 +186,13 @@ Returns
 ### Lyrics
 
 Properties
-|Name         |Value                              |Description                                                          |
-|:------------|:---------------------------------:|:--------------------------------------------------------------------|
-|source_name  |`str`                              |The name of the source where the lyrics were fetched from.           |
-|provider     |`str`                              |The name of the provider the lyrics was fetched from on the source.  |
-|text         |`str`, `None`                      |The lyrics text.                                                     |
-|lines        |`typing.Sequence[LyricLine)]`      |The lyrics lines.                                                    |
-|plugin       |`typing.Mapping[str, typing.Any]`  |Additional plugin specific data.                                     |
+|Name         |Value                                           |Description                                                          |
+|:------------|:----------------------------------------------:|:--------------------------------------------------------------------|
+|source_name  |`str`                                           |The name of the source where the lyrics were fetched from.           |
+|provider     |`str`                                           |The name of the provider the lyrics was fetched from on the source.  |
+|text         |`str`, `None`                                   |The lyrics text.                                                     |
+|lines        |`typing.Sequence[`[`LyricLine`](#lyricline)`]`  |The lyrics lines.                                                    |
+|plugin       |`typing.Mapping[str, typing.Any]`               |Additional plugin specific data.                                     |
 
 ### LyricLine
 
