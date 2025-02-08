@@ -65,7 +65,7 @@ async def lyrics_command(ctx: lightbulb.Context) -> None:
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
-    
+
     if len(lyrics.lines) > 0:
         embed = hikari.Embed(
             title=f"Lyrics for {track.info.title}",
@@ -79,7 +79,7 @@ async def lyrics_command(ctx: lightbulb.Context) -> None:
     else:
         await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
         return
-    
+
     await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 
@@ -124,7 +124,7 @@ async def current_lyrics_command(ctx: lightbulb.Context) -> None:
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
-    
+
     if len(lyrics.lines) > 0:
         embed = hikari.Embed(
             title=f"Lyrics for {player.track.info.title}",
@@ -138,7 +138,7 @@ async def current_lyrics_command(ctx: lightbulb.Context) -> None:
     else:
         await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
         return
-    
+
     await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 

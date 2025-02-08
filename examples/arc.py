@@ -25,7 +25,7 @@ async def lyrics_command(
     ctx: arc.GatewayContext,
     query: arc.Option[str, arc.StrParams("The song you wish to search for.")],
     music: ongaku.Client = arc.inject(),
-    lavalyrics: LavaLyricsExtension = arc.inject()
+    lavalyrics: LavaLyricsExtension = arc.inject(),
 ) -> None:
     result = await music.rest.load_track(query)
 
@@ -55,7 +55,7 @@ async def lyrics_command(
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
-    
+
     if len(lyrics.lines) > 0:
         embed = hikari.Embed(
             title=f"Lyrics for {track.info.title}",
@@ -69,7 +69,7 @@ async def lyrics_command(
     else:
         await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
         return
-    
+
     await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 
@@ -78,7 +78,7 @@ async def lyrics_command(
 async def current_lyrics_command(
     ctx: arc.GatewayContext,
     player: ongaku.Player = arc.inject(),
-    lavalyrics: LavaLyricsExtension = arc.inject()
+    lavalyrics: LavaLyricsExtension = arc.inject(),
 ) -> None:
     if player.track is None:
         await ctx.respond(
@@ -103,7 +103,7 @@ async def current_lyrics_command(
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
-    
+
     if len(lyrics.lines) > 0:
         embed = hikari.Embed(
             title=f"Lyrics for {player.track.info.title}",
@@ -117,7 +117,7 @@ async def current_lyrics_command(
     else:
         await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
         return
-    
+
     await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 

@@ -98,27 +98,28 @@ async def message_event(
     # Fetch the lyrics for the song.
     lyrics = await ll.fetch_lyrics(track)
 
-    # Make sure the lyrics were not None.
     if lyrics is None:
-        await bot.rest.create_message(
-            event.channel_id,
+        await ctx.respond(
             "Could not find lyrics for the requested track.",
-            reply=event.message,
+            flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
 
-    # Turn lyrics into an embed.
-    embed = hikari.Embed(
-        title=f"Lyrics for {track.info.title}",
-        description="\n".join([lyric.line for lyric in lyrics.lines])
-    )
-
-    # Send the lyrics as an embed.
-    await bot.rest.create_message(
-        event.channel_id,
-        embed=embed,
-        reply=event.message,
-    )
+    if len(lyrics.lines) > 0:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description="\n".join([lyric.line for lyric in lyrics.lines]),
+        )
+    elif lyrics.text:
+        embed = hikari.Embed(
+            title=f"Lyrics for {track.info.title}",
+            description=lyrics.text,
+        )
+    else:
+        await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
+        return
+    
+    await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 ```
 
 ## API Reference

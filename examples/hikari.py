@@ -54,10 +54,10 @@ async def lyrics_command_event(event: hikari.GuildMessageCreateEvent) -> None:
         await bot.rest.create_message(
             event.channel_id,
             "Could not find lyrics for the requested track.",
-            reply=event.message
+            reply=event.message,
         )
         return
-    
+
     if len(lyrics.lines) > 0:
         embed = hikari.Embed(
             title=f"Lyrics for {track.info.title}",
@@ -69,9 +69,11 @@ async def lyrics_command_event(event: hikari.GuildMessageCreateEvent) -> None:
             description=lyrics.text,
         )
     else:
-        await bot.rest.create_message(event.channel_id, "No lyrics in payload :/", reply=event.message)
+        await bot.rest.create_message(
+            event.channel_id, "No lyrics in payload :/", reply=event.message
+        )
         return
-    
+
     await bot.rest.create_message(event.channel_id, embed=embed, reply=event.message)
 
 
@@ -111,10 +113,10 @@ async def current_lyrics_command_event(event: hikari.GuildMessageCreateEvent) ->
         await bot.rest.create_message(
             event.channel_id,
             "Could not find lyrics for the requested track.",
-            reply=event.message
+            reply=event.message,
         )
         return
-    
+
     if len(lyrics.lines) > 0:
         embed = hikari.Embed(
             title=f"Lyrics for {player.track.info.title}",
@@ -126,9 +128,11 @@ async def current_lyrics_command_event(event: hikari.GuildMessageCreateEvent) ->
             description=lyrics.text,
         )
     else:
-        await bot.rest.create_message(event.channel_id, "No lyrics in payload :/", reply=event.message)
+        await bot.rest.create_message(
+            event.channel_id, "No lyrics in payload :/", reply=event.message
+        )
         return
-    
+
     await bot.rest.create_message(event.channel_id, embed=embed, reply=event.message)
 
 

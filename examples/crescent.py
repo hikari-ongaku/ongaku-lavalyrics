@@ -65,7 +65,7 @@ class Lyrics:
                 flags=hikari.MessageFlag.EPHEMERAL,
             )
             return
-        
+
         if len(lyrics.lines) > 0:
             embed = hikari.Embed(
                 title=f"Lyrics for {track.info.title}",
@@ -77,9 +77,11 @@ class Lyrics:
                 description=lyrics.text,
             )
         else:
-            await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
+            await ctx.respond(
+                "No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL
+            )
             return
-        
+
         await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 
@@ -125,7 +127,7 @@ class CurrentLyrics:
                 flags=hikari.MessageFlag.EPHEMERAL,
             )
             return
-        
+
         if len(lyrics.lines) > 0:
             embed = hikari.Embed(
                 title=f"Lyrics for {player.track.info.title}",
@@ -137,9 +139,11 @@ class CurrentLyrics:
                 description=lyrics.text,
             )
         else:
-            await ctx.respond("No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL)
+            await ctx.respond(
+                "No lyrics in payload :/", flags=hikari.MessageFlag.EPHEMERAL
+            )
             return
-        
+
         await ctx.respond(embed=embed, flags=hikari.MessageFlag.EPHEMERAL)
 
 
